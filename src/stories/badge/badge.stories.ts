@@ -30,36 +30,13 @@ const meta: Meta<QDSBadgeComponent> = {
                 'informative',
                 'success',
                 'warning',
-                'error',
-                'new'
+                'critical'
             ],
             table: {
                 type: {
-                    summary: `'neutral' | 'informative' | 'success' | 'warning' | 'error' | 'new'`
+                    summary: `'neutral' | 'informative' | 'success' | 'warning' | 'critical'`
                 },
                 defaultValue: { summary: 'neutral' }
-            }
-        },
-        hasNotification: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: { summary: 'false' }
-            }
-        },
-        isCircle: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: { summary: 'false' }
             }
         },
         secondary: {
@@ -78,41 +55,107 @@ const meta: Meta<QDSBadgeComponent> = {
 
 export default meta;
 
-export const SolidBadge = {
+export const SolidNeutralBadge = {
     args: {
         label: 'Status',
         status: 'neutral'
+    },
+    argTypes: {
+        customClasses: { table: { disable: true } }
     }
 };
 
-export const SolidCircleBadge = {
-    args: {
-        isCircle: true,
-        label: '#',
-        status: 'informative'
-    }
-};
-
-export const SecondaryBadge = {
+export const SolidInformativeBadge = {
     args: {
         label: 'Status',
-        secondary: true,
+        status: 'informative'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
+    }
+};
+
+export const SolidSuccessBadge = {
+    args: {
+        label: 'Status',
         status: 'success'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
     }
 };
 
-export const SecondaryCircleBadge = {
+export const SolidCriticalBadge = {
     args: {
-        isCircle: true,
-        label: '#',
-        secondary: true,
+        label: 'Status',
+        status: 'critical'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
+    }
+};
+
+export const SolidWarningBadge = {
+    args: {
+        label: 'Status',
         status: 'warning'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
     }
 };
 
-export const NotificationBadge = {
+export const SecondaryNeutralBadge = {
     args: {
-        hasNotification: true,
-        status: 'error'
+        secondary: true,
+        label: 'Status',
+        status: 'neutral'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
+    }
+};
+
+export const SecondaryInformativeBadge = {
+    args: {
+        secondary: true,
+        label: 'Status',
+        status: 'informative'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
+    }
+};
+
+export const SecondarySuccessBadge = {
+    args: {
+        secondary: true,
+        label: 'Status',
+        status: 'success'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
+    }
+};
+
+export const SecondaryCriticalBadge = {
+    args: {
+        secondary: true,
+        label: 'Status',
+        status: 'critical'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
+    }
+};
+
+export const SecondaryWarningBadge = {
+    args: {
+        secondary: true,
+        label: 'Status',
+        status: 'warning'
+    },
+    argTypes: {
+        ...SolidNeutralBadge.argTypes
     }
 };

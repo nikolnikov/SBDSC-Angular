@@ -1,10 +1,22 @@
-import { Meta } from '@storybook/angular';
+import { Meta, moduleMetadata } from '@storybook/angular';
 import { MaterialModule } from '../../app/material.module';
 import { QDSHeaderComponent } from './header.component';
+import { QDSButtonComponent } from '../button/button.component';
+import { QDSInputComponent } from '../input/input.component';
 
 const meta: Meta<QDSHeaderComponent> = {
     title: 'Components/Navigation/Header',
     component: QDSHeaderComponent,
+    decorators: [
+        moduleMetadata({
+            imports: [MaterialModule],
+            declarations: [
+                QDSHeaderComponent,
+                QDSButtonComponent,
+                QDSInputComponent
+            ]
+        })
+    ],
     parameters: {
         layout: 'centered',
         actions: {
@@ -35,324 +47,105 @@ const meta: Meta<QDSHeaderComponent> = {
                     summary: 'string'
                 }
             }
-        }
+        },
+        showButton: { table: { disable: true } }
     }
 };
 
 export default meta;
 
-const headerButton = {
-    label: 'Sign on',
-    icon: 'plus-circle',
-    iconRight: 'caret-right'
-};
+const headerNavData = [
+    [
+        {
+            label: 'Menu Option 1',
+            route: '#'
+        },
+        {
+            label: 'Menu Option 2',
+            route: '#'
+        },
+        {
+            label: 'Menu Option 3',
+            route: '#'
+        }
+    ],
+    [
+        {
+            label: 'Shop',
+            image: 'https://ds.cdn.questdiagnostics.com/assets/img/placeholder-img.png',
+            subNav: [
+                {
+                    label: 'Vitamins & Supplements',
+                    route: '#'
+                },
+                {
+                    label: 'Personal Care',
+                    route: '#'
+                },
+                {
+                    label: 'Beauty',
+                    route: '#'
+                },
+                {
+                    label: 'Medicines',
+                    route: '#'
+                },
+                {
+                    label: 'Health Devices',
+                    route: '#'
+                },
+                {
+                    label: 'Fitness',
+                    route: '#'
+                },
+                {
+                    label: 'Health Food & Drinks',
+                    route: '#'
+                }
+            ]
+        }
+    ]
+];
 
-const userNotifications = [
+const topBarData = [
     {
-        title: 'Lab result available',
-        message:
-            'Your CBC w/Differential results are ready. You can view your results by clicking here on this notification.'
+        label: 'Topbar Link',
+        route: '#'
     },
     {
-        title: 'Lab result available',
-        message:
-            'Your Glucose and AC1 results are ready. You can view your results by clicking here on this notification.'
-    },
-    {
-        title: 'J. Osterman has updated their profile',
-        message: 'Address and phone number have been updated.'
+        label: 'Topbar Link',
+        route: '#'
     }
 ];
 
-export const HeaderWithNavigationAndSubnav = {
+export const HeaderWithNavigationAndTopBar = {
     args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md',
-        navData: [
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                subNav: [
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    }
-                ]
-            }
-        ],
-        subNavData: [
-            {
-                label: 'Text button',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                subNav: [
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    }
-                ]
-            }
-        ]
-    }
-};
-
-export const HeaderWithNavigationAndButton = {
-    args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md',
-        navData: [
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                subNav: [
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    }
-                ]
-            }
-        ],
-        button: headerButton
-    }
-};
-
-export const HeaderWithNavigationAndNotifications = {
-    args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md',
-        navData: [
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                subNav: [
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    }
-                ]
-            }
-        ],
-        userNotifications: userNotifications
+        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
+        logoSize: 'sm',
+        navData: headerNavData,
+        topBarData: topBarData
     }
 };
 
 export const HeaderWithNavigation = {
     args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md',
-        navData: [
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                route: '/'
-            },
-            {
-                label: 'Text button',
-                icon: 'user-circle',
-                subNav: [
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    },
-                    {
-                        icon: 'user-circle',
-                        label: 'Text button',
-                        route: '/'
-                    }
-                ]
-            }
-        ]
+        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
+        logoSize: 'sm',
+        navData: headerNavData
     }
 };
 
-export const HeaderWithButton = {
+export const HeaderWithSearch = {
     args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md',
-        button: headerButton
-    }
-};
-
-export const HeaderWithAvatarAndUserMenu = {
-    render: (args: QDSHeaderComponent) => ({
-        props: {
-            ...args,
-            userMenuClickHandler: () => console.log('User menu item clicked')
-        },
-        moduleMetadata: {
-            imports: [MaterialModule]
-        },
-        template: `
-            <qds-header
-                [logo]="logo"
-                [logoSize]="logoSize"
-                [userInitial]="userInitial"
-                [userMenuContent]="userMenuTemplate"
-            />
-
-            <ng-template #userMenuTemplate>
-                <div class="ds-flex --column">
-                    <qds-button
-                        (clickHandler)="userMenuClickHandler()"
-                        customClasses="ds-header__dropdown-item"
-                        icon="user-circle"
-                        label="Edit profile"
-                    />
-
-                    <qds-button
-                        (clickHandler)="userMenuClickHandler()"
-                        customClasses="ds-header__dropdown-item"
-                        icon="lock-simple-open"
-                        label="Settings and privacy"
-                    />
-
-                    <qds-button
-                        (clickHandler)="userMenuClickHandler()"
-                        customClasses="ds-header__dropdown-item"
-                        icon="arrow-square-up-right"
-                        label="Logout"
-                    />
-                </div>
-            </ng-template>
-        `
-    }),
-    args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md',
-        userInitial: 'E'
+        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
+        logoSize: 'sm',
+        showSearch: true
     }
 };
 
 export const BasicHeader = {
     args: {
-        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/qd-brand--horizontal--green.svg',
-        logoSize: 'md'
+        logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
+        logoSize: 'sm'
     }
 };

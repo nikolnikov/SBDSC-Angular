@@ -21,18 +21,15 @@ const meta: Meta<QDSMessageComponent> = {
             },
             table: {
                 type: {
-                    summary: '[{ title: string; action: string; }]'
+                    summary: '[{ label: string; action: string; }]'
                 }
             }
         },
-        hideX: {
-            control: 'boolean',
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: { summary: 'false' }
-            }
+        closeHandler: {
+            control: {
+                type: 'object'
+            },
+            table: { disable: true }
         },
         message: {
             control: 'text',
@@ -77,9 +74,10 @@ export default meta;
 export const InformativeMessage = {
     args: {
         actions: [
-            { title: 'Yes', action: null },
-            { title: 'No', action: null }
+            { label: 'Yes', action: null },
+            { label: 'No', action: null }
         ],
+        closeHandler: () => {},
         message:
             "We've sent you an email detailing your recent account changes. Didn't receive an email? Click below.",
         title: 'Heading',
@@ -89,21 +87,32 @@ export const InformativeMessage = {
 
 export const SuccessMessage = {
     args: {
-        ...InformativeMessage.args,
+        message:
+            "We've sent you an email detailing your recent account changes.",
+        title: 'Heading',
         type: 'success'
-    }
-};
-
-export const ErrorMessage = {
-    args: {
-        ...InformativeMessage.args,
-        type: 'error'
     }
 };
 
 export const WarningMessage = {
     args: {
-        ...InformativeMessage.args,
+        actions: [
+            { label: 'Yes', action: null },
+            { label: 'No', action: null }
+        ],
+        inlineActions: true,
+        message: 'Would you like to proceed with the change?',
         type: 'warning'
+    },
+    argTypes: {
+        closeHandler: { table: { disable: true } },
+        customClasses: { table: { disable: true } }
+    }
+};
+
+export const ErrorMessage = {
+    args: {
+        message: 'An error has occured. Please try again.',
+        type: 'error'
     }
 };

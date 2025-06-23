@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Inject, Input } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    HostListener,
+    Inject,
+    Input,
+    ViewChild
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -12,26 +20,37 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
                 buttonLabel && secondaryButtonLabel && ghostButtonLabel
             "
         >
-            <div mat-dialog-header class="ds-modal__header">
-                <h1 *ngIf="title">{{ title }}</h1>
+            <div
+                class="ds-modal__wrapper"
+                [class.--all-btns]="ghostButtonLabel"
+            >
+                <div class="ds-modal__header">
+                    <h2 *ngIf="title">
+                        {{ title }}
+                    </h2>
 
-                <button
-                    class="ds-button --icon --md"
-                    *ngIf="!hideX"
-                    (click)="onClose()"
-                >
-                    <span class="ds-icon--close"></span>
-                </button>
+                    <button
+                        class="ds-button --icon --md"
+                        (click)="onClose()"
+                        *ngIf="!hideX"
+                    >
+                        <span class="ds-icon--close"></span>
+                    </button>
+                </div>
+
+                <div class="ds-modal__content" #modalContent>
+                    <div [innerHTML]="content"></div>
+                </div>
             </div>
 
-            <div mat-dialog-content class="ds-modal__content">
-                <div [innerHTML]="content"></div>
-            </div>
-
-            <div mat-dialog-actions class="ds-modal__actions">
+            <div
+                *ngIf="buttonLabel || secondaryButtonLabel || ghostButtonLabel"
+                class="ds-modal__actions"
+                [class.--scroll]="isContentScrollable"
+            >
                 <button
-                    *ngIf="ghostButtonLabel"
                     class="ds-button --ghost"
+                    *ngIf="ghostButtonLabel"
                     (click)="onGhostButtonClick()"
                 >
                     {{ ghostButtonLabel }}
@@ -39,15 +58,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
                 <div class="ds-modal__actions-right">
                     <button
-                        *ngIf="secondaryButtonLabel"
                         class="ds-button --secondary"
+                        *ngIf="secondaryButtonLabel"
                         (click)="onSecondaryButtonClick()"
                     >
                         {{ secondaryButtonLabel }}
                     </button>
+
                     <button
-                        *ngIf="buttonLabel"
                         class="ds-button --primary"
+                        *ngIf="buttonLabel"
                         (click)="onPrimaryButtonClick()"
                     >
                         {{ buttonLabel }}
@@ -69,6 +89,14 @@ export class QDSModalComponent implements AfterViewInit {
     @Input() title: string = '';
     @Input() type: 'alert' | 'error' | 'informative' = 'informative';
 
+    @ViewChild('modalContent') modalContent!: ElementRef;
+    isContentScrollable = false;
+
+    @HostListener('window:resize')
+    onResize() {
+        this.checkScrollability();
+    }
+
     onClose() {
         this.dialogRef.close();
     }
@@ -88,6 +116,20 @@ export class QDSModalComponent implements AfterViewInit {
         this.dialogRef.close();
     }
 
+    ngAfterViewInit() {
+        setTimeout(() => this.checkScrollability(), 1);
+    }
+
+    checkScrollability() {
+        const content = this.modalContent?.nativeElement;
+        if (content) {
+            this.isContentScrollable =
+                content.scrollHeight > content.clientHeight;
+        } else {
+            this.isContentScrollable = false;
+        }
+    }
+
     constructor(
         public dialogRef: MatDialogRef<QDSModalComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -103,6 +145,4 @@ export class QDSModalComponent implements AfterViewInit {
         this.hideX = data.hideX;
         this.type = data.type;
     }
-
-    ngAfterViewInit() {}
 }

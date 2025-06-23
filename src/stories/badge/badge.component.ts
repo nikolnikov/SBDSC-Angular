@@ -12,23 +12,21 @@ import {
         <div
             class="ds-badge"
             [class]="customClasses"
-            [ngClass]="getColor()"
             [ngClass]="getStatus()"
-            [class.--circle]="isCircle"
             [class.--secondary]="secondary"
-            [class.--dot]="hasNotification"
             [class.--neutral]="!status"
             role="status"
         >
+            <span
+                *ngIf="status !== 'neutral'"
+                [ngClass]="'ds-icon--' + icons[status]"
+            ></span>
             {{ label }}
         </div>
     `
 })
 export class QDSBadgeComponent implements AfterViewInit {
-    @Input() color: string = '';
     @Input() customClasses: string = '';
-    @Input() hasNotification: boolean = false;
-    @Input() isCircle: boolean = false;
     @Input() label: string = '';
     @Input() secondary: boolean = false;
     @Input() status:
@@ -36,18 +34,23 @@ export class QDSBadgeComponent implements AfterViewInit {
         | 'informative'
         | 'success'
         | 'warning'
-        | 'error'
-        | 'new' = 'neutral';
-
-    getColor() {
-        return `--${this.color}`;
-    }
+        | 'critical' = 'neutral';
 
     getStatus() {
         return `--${this.status}`;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    icons = {
+        success: 'check-circle',
+        informative: 'info',
+        warning: 'warning',
+        critical: 'warning-octagon'
+    };
+
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

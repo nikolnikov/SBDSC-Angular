@@ -15,55 +15,15 @@ const meta: Meta<QDSFooterComponent> = {
     },
     tags: ['autodocs', '!dev'],
     argTypes: {
-        hideLogo: {
+        type: {
             control: {
-                type: 'boolean'
+                type: 'radio',
+                options: ['cit', 'hipaa']
             },
+            defaultValue: 'cit',
             table: {
                 type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
-        hideNav: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
-        noMargins: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
-        noMaxWidth: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
+                    summary: 'cit | hipaa'
                 }
             }
         }
@@ -72,25 +32,12 @@ const meta: Meta<QDSFooterComponent> = {
 
 export default meta;
 
-export const CorportateFooter = {
+export const CITFooter = {
     args: {}
 };
 
-export const CorportateFooterWithNoLogo = {
+export const HIPAAFooter = {
     args: {
-        hideLogo: true
-    }
-};
-
-export const LightCorportateFooter = {
-    args: {
-        hideNav: true
-    }
-};
-
-export const LightCorportateFooterWithNoLogo = {
-    args: {
-        hideLogo: true,
-        hideNav: true
+        type: 'hipaa'
     }
 };

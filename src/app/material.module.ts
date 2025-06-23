@@ -1,7 +1,6 @@
 import { CdkTableModule } from '@angular/cdk/table';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -23,16 +22,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { QDSButtonComponent } from '../stories/button/button.component';
-import { QDSHeaderComponent } from '../stories/navigation/header.component';
 
 @NgModule({
-    declarations: [QDSButtonComponent, QDSHeaderComponent],
     imports: [
         CdkTableModule,
-        CommonModule,
         MatAutocompleteModule,
         MatCheckboxModule,
         MatDatepickerModule,
@@ -54,8 +47,7 @@ import { QDSHeaderComponent } from '../stories/navigation/header.component';
         MatStepperModule,
         MatTableModule,
         MatTooltipModule,
-        OverlayModule,
-        ReactiveFormsModule
+        OverlayModule
     ],
     exports: [
         CdkTableModule,
@@ -80,10 +72,7 @@ import { QDSHeaderComponent } from '../stories/navigation/header.component';
         MatStepperModule,
         MatTableModule,
         MatTooltipModule,
-        OverlayModule,
-        ReactiveFormsModule,
-        QDSButtonComponent,
-        QDSHeaderComponent
+        OverlayModule
     ]
 })
 export class MaterialModule {}

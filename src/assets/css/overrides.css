@@ -70,21 +70,32 @@ h1.sbdocs-title,
 
 .docs-story > div > div,
 .sb-story.sb-unstyled,
+[id*="story--components-banner"] > *,
 story--components-divider--default-divider--primary-inner,
 [id*="story--components-navigation-header"] > *,
 .ds-header,
 story--components-progress-bar--default-progress-bar--primary-inner,
-[id*="story--components-progress-stepper"] > * {
+[id*="story--components-progress-stepper"] > *,
+[id*="story--components-message"] > * {
     width: 100% !important;
+}
+
+[id*="story--components-icon"] > * {
+    display: flex;
 }
 
 .docs-story .css-1qq744x {
     background: #fff;
-    padding: 50px 20px;
+    padding: 40px 20px;
 }
 
 .docs-story .css-1qq744x:has([class*="--inverse"]) {
     background: #034c1f;
+}
+
+.docs-story .css-1qq744x:has(.ds-banner),
+.docs-story .css-1qq744x:has(.ds-header) {
+    background: #fff !important;
 }
 
 .sb-story.sb-unstyled > div {
@@ -157,8 +168,14 @@ h2.sbdocs-subtitle h4 {
     min-width: 300px !important;
 }
 
-.ds-pagination__size .ds-input {
-    min-width: auto;
+.ds-pagination__size .ds-input,
+.ds-header .ds-input {
+    min-width: auto !important;
+}
+
+[id*="story--components-navigation-header"] .ds-header__subnav {
+    position: absolute !important;
+    top: 67px !important;
 }
 
 body.sb-show-main {

@@ -70,7 +70,7 @@ const meta: Meta<QDSButtonComponent> = {
                 defaultValue: { summary: 'false' }
             }
         },
-        isInverse: {
+        isDownload: {
             control: 'boolean',
             table: {
                 type: {
@@ -79,7 +79,7 @@ const meta: Meta<QDSButtonComponent> = {
                 defaultValue: { summary: 'false' }
             }
         },
-        isSave: {
+        isInverse: {
             control: 'boolean',
             table: {
                 type: {
@@ -187,5 +187,12 @@ export const DestructiveGhostButton = {
         ...PrimaryButton.args,
         isDestructive: true,
         type: 'ghost'
+    }
+};
+
+export const DownloadButton = {
+    args: {
+        ...PrimaryButton.args,
+        isDownload: true
     }
 };

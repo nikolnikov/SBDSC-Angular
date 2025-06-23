@@ -21,7 +21,7 @@ const meta: Meta<QDSLoaderComponent> = {
     },
     tags: ['autodocs', '!dev'],
     argTypes: {
-        isDeterminate: {
+        isCentered: {
             control: {
                 type: 'boolean'
             },
@@ -34,7 +34,7 @@ const meta: Meta<QDSLoaderComponent> = {
                 }
             }
         },
-        isSmall: {
+        isFixed: {
             control: {
                 type: 'boolean'
             },
@@ -44,16 +44,6 @@ const meta: Meta<QDSLoaderComponent> = {
                 },
                 defaultValue: {
                     summary: 'false'
-                }
-            }
-        },
-        progressValue: {
-            control: {
-                type: 'number'
-            },
-            table: {
-                type: {
-                    summary: 'number'
                 }
             }
         }
@@ -64,17 +54,4 @@ export default meta;
 
 export const DefaultLoader = {
     args: {}
-};
-
-export const SmallLoader = {
-    args: {
-        isSmall: true
-    }
-};
-
-export const DeterminateLoader = {
-    args: {
-        isDeterminate: true,
-        progressValue: 50
-    }
 };

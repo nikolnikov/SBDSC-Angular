@@ -1,76 +1,96 @@
 import {
+    AfterContentInit,
+    AfterViewInit,
     Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
     Input,
     Output,
-    EventEmitter,
-    ElementRef,
     Renderer2,
-    AfterViewInit
+    TemplateRef,
+    ViewChild
 } from '@angular/core';
 
 @Component({
     selector: 'qds-message',
     template: `
         <div
-            [ngClass]="['ds-message', '--' + type, customClasses]"
+            class="ds-message"
+            [class]="customClasses"
+            [class.--informative]="type === 'informative'"
+            [class.--success]="type === 'success'"
+            [class.--warning]="type === 'warning'"
+            [class.--error]="type === 'error'"
             role="alert"
         >
             <div *ngIf="!noIcon" class="ds-message__icon">
-                <span [ngClass]="'ds-icon--' + getIconName()"></span>
+                <span class="ds-icon--{{ icon }}"></span>
             </div>
 
             <div class="ds-message__content">
-                <h3 *ngIf="title">{{ title }}</h3>
+                <div *ngIf="title" class="ds-message__title">{{ title }}</div>
 
-                {{ message }}
+                <span [innerHTML]="message"></span>
 
-                <div *ngIf="actions.length > 0" class="ds-message__actions">
-                    <a
-                        class="ds-link"
-                        href="action.action"
-                        *ngFor="let action of actions; let i = index"
+                <ng-container *ngIf="actions.length > 0">
+                    <div
+                        class="ds-message__actions"
+                        [class.--inline]="inlineActions"
                     >
-                        {{ action.title }}
-                    </a>
-                </div>
+                        <a
+                            class="ds-link"
+                            *ngFor="let action of actions; let i = index"
+                            href="{{ action.action }}"
+                        >
+                            {{ action.label }}
+                        </a>
+                    </div>
+                </ng-container>
             </div>
 
-            <div *ngIf="!hideX" class="ds-message__close">
-                <button class="ds-button --icon --md" (click)="onClose()">
-                    <span class="ds-icon--close"></span>
-                </button>
-            </div>
+            <button
+                class="ds-button --icon"
+                *ngIf="closeHandler.observers.length > 0"
+                (click)="onClick($event)"
+            >
+                <span class="ds-icon--close"></span>
+            </button>
         </div>
     `
 })
 export class QDSMessageComponent implements AfterViewInit {
     @Input() customClasses: string = '';
     @Input() actions: any[] = [];
-    @Input() hideX: boolean = false;
+    @Input() inlineActions: boolean = false;
     @Input() message: string = '';
     @Input() noIcon: boolean = false;
     @Input() title: string = '';
-    @Input() type: 'informative' | 'success' | 'warning' | 'error' =
-        'informative';
+    @Input() type: 'neutral' | 'informative' | 'success' | 'warning' | 'error' =
+        'neutral';
 
-    @Output() closeHandler = new EventEmitter<void>();
+    @Output() closeHandler = new EventEmitter<Event>();
 
-    onClose() {
-        this.closeHandler.emit();
+    onClick(event: Event) {
+        this.closeHandler.emit(event);
     }
 
-    getIconName(): string {
-        const iconType = {
-            informative: 'info',
-            success: 'check-circle',
-            warning: 'warning',
-            error: 'warning-octagon'
-        };
+    iconType = {
+        neutral: 'chat-teardrop-text',
+        informative: 'info',
+        success: 'check-circle',
+        warning: 'warning',
+        error: 'warning-octagon'
+    };
 
-        return iconType[this.type] || 'info';
+    get icon(): string {
+        return this.iconType[this.type];
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

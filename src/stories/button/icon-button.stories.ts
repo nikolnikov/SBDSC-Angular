@@ -84,6 +84,15 @@ const meta: Meta<QDSIconButtonComponent> = {
                 },
                 defaultValue: { summary: 'above' }
             }
+        },
+        whiteTooltip: {
+            control: 'boolean',
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: { summary: 'false' }
+            }
         }
     }
 };
@@ -121,6 +130,6 @@ export const InverseIconButton = {
 export const IconButtonWithTooltip = {
     args: {
         ...PrimaryIconButton.args,
-        tooltip: 'Settings'
+        tooltip: 'Tooltip goes here.'
     }
 };

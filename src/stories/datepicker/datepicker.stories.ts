@@ -170,7 +170,7 @@ export const SimpleDatepicker = {
 export const DateRangePicker = {
     args: {
         label: 'Custom range',
-        hintMessage: 'mm/dd/yyyy - mm/dd/yyyy',
+        hintMessage: 'mm/dd/yyyy',
         inputId: 'datepicker-3',
         isRange: true,
         placeholder: 'mm/dd/yyyy'

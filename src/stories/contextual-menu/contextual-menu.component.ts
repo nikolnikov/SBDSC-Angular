@@ -26,8 +26,9 @@ import { MatMenu } from '@angular/material/menu';
                 (click)="handleItemClick(item)"
                 *ngFor="let item of menuItems"
             >
-                <span *ngIf="item.icon" class="ds-icon--{{ item.icon }}"></span>
-                {{ item.label }}
+                <span class="ds-menu__item-label">
+                    {{ item.label }}
+                </span>
             </button>
         </mat-menu>
     `
@@ -35,6 +36,7 @@ import { MatMenu } from '@angular/material/menu';
 export class QDSContextualMenuComponent implements AfterViewInit {
     @Input() menuItems: any[] = [];
     @Input() menuRight: boolean = false;
+    @Input() menuWidth: number = 0;
     @Input() menuClass: string = '';
 
     @ViewChild('menu', { static: true }) menu!: MatMenu;
@@ -49,7 +51,10 @@ export class QDSContextualMenuComponent implements AfterViewInit {
         }
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

@@ -6,7 +6,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         <ng-container *ngIf="tooltip; else noTooltip">
             <span
                 matTooltip="{{ tooltip }}"
-                matTooltipPosition="{{ tooltipPlacement }}"
+                [matTooltipPosition]="tooltipPlacement"
+                [matTooltipClass]="whiteTooltip ? '--white' : ''"
             >
                 <button
                     [ngClass]="getButtonClasses()"
@@ -39,6 +40,7 @@ export class QDSIconButtonComponent {
     @Input() size: 'sm' | 'md' | 'lg' = 'lg';
     @Input() tooltip: string = '';
     @Input() tooltipPlacement: 'above' | 'below' | 'left' | 'right' = 'above';
+    @Input() whiteTooltip: boolean = false;
 
     @Output() clickHandler = new EventEmitter<Event>();
 

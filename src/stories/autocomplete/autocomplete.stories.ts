@@ -29,13 +29,21 @@ const meta: Meta<QDSAutocompleteComponent> = {
             control: {
                 type: 'text'
             },
-            table: {
-                type: {
-                    summary: 'string'
-                }
-            }
+            table: { disable: true }
         },
         inputId: {
+            control: {
+                type: 'text'
+            },
+            table: { disable: true }
+        },
+        options: {
+            control: {
+                type: 'object'
+            },
+            table: { disable: true }
+        },
+        errorMessage: {
             control: {
                 type: 'text'
             },
@@ -45,14 +53,47 @@ const meta: Meta<QDSAutocompleteComponent> = {
                 }
             }
         },
-        options: {
+        hasError: {
             control: {
-                type: 'object'
+                type: 'boolean'
             },
             table: {
                 type: {
-                    summary: '[]'
+                    summary: 'boolean'
+                },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        hasIcon: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: { summary: 'false' }
+            }
+        },
+        hintMessage: {
+            control: {
+                type: 'text'
+            },
+            table: {
+                type: {
+                    summary: 'string'
                 }
+            }
+        },
+        isDisabled: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: { summary: 'false' }
             }
         },
         isRequired: {
@@ -76,46 +117,11 @@ const meta: Meta<QDSAutocompleteComponent> = {
                 }
             }
         },
-        hasIcon: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: { summary: 'false' }
-            }
-        },
-        errorMessage: {
-            control: {
-                type: 'text'
-            },
-            table: {
-                type: {
-                    summary: 'string'
-                }
-            }
-        },
-        hintMessage: {
-            control: {
-                type: 'text'
-            },
-            table: {
-                type: {
-                    summary: 'string'
-                }
-            }
-        },
         maxWidth: {
             control: {
                 type: 'number'
             },
-            table: {
-                type: {
-                    summary: 'number'
-                }
-            }
+            table: { disable: true }
         }
     }
 };

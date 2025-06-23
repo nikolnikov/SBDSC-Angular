@@ -9,11 +9,22 @@ import {
 @Component({
     selector: 'qds-icon',
     template: `
-        <span
-            [ngClass]="getIconClasses()"
-            [attr.aria-label]="name"
-            role="img"
-        ></span>
+        <ng-container *ngIf="isIllustrativeType(); else spanTemplate">
+            <img
+                [class]="customClasses"
+                [src]="getImgSrc()"
+                [alt]="name"
+                [style.width]="size"
+                [style.height]="'auto'"
+            />
+        </ng-container>
+        <ng-template #spanTemplate>
+            <span
+                [class]="getIconClasses()"
+                [attr.aria-label]="name"
+                role="img"
+            ></span>
+        </ng-template>
     `
 })
 export class QDSIconComponent implements AfterViewInit {
@@ -23,6 +34,23 @@ export class QDSIconComponent implements AfterViewInit {
     @Input() matSuffix: boolean = false;
     @Input() name: string = '';
     @Input() size: string = '';
+    @Input() type: '' | 'illustrative' | 'illustrativeWhite' | 'billing' = '';
+
+    isIllustrativeType(): boolean {
+        return (
+            this.type === 'illustrative' ||
+            this.type === 'illustrativeWhite' ||
+            this.type === 'billing'
+        );
+    }
+
+    getImgSrc(): string {
+        return `https://ds.cdn.questdiagnostics.com/assets/ds-icons/ds-icon${
+            this.type === 'illustrative' ? '--illustrative-green' : ''
+        }${this.type === 'illustrativeWhite' ? '--illustrative-white' : ''}--${
+            this.name
+        }.svg`;
+    }
 
     getIconClasses() {
         return {
@@ -43,7 +71,10 @@ export class QDSIconComponent implements AfterViewInit {
         return `ds-font-${this.size}`;
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

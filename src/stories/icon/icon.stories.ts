@@ -38,6 +38,15 @@ const meta: Meta<QDSIconComponent> = {
                     summary: 'string'
                 }
             }
+        },
+        type: {
+            control: 'radio',
+            options: ['illustrative', 'illustrativeWhite', 'billing'],
+            table: {
+                type: {
+                    summary: `'illustrative' | 'illustrativeWhite' | 'billing'`
+                }
+            }
         }
     }
 };

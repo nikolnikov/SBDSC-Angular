@@ -10,8 +10,9 @@ import {
     selector: 'qds-card',
     template: `
         <div class="ds-card" [class]="customClasses">
-            <div class="ds-card__content">
+            <div class="--content">
                 <h3 *ngIf="title">{{ title }}</h3>
+
                 <ng-content></ng-content>
             </div>
         </div>
@@ -21,7 +22,10 @@ export class QDSCardComponent implements AfterViewInit {
     @Input() customClasses: string = '';
     @Input() title: string = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

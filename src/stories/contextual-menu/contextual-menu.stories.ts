@@ -29,7 +29,7 @@ const meta: Meta<QDSContextualMenuComponent> = {
             props,
             template: `
                 <qds-icon-button
-                    icon="gear"
+                    icon="user-circle"
                     [matMenuTriggerFor]="actionMenu.menu"
                 />
 
@@ -73,19 +73,22 @@ export const DefaultContextualMenu = {
     args: {
         menuItems: [
             {
-                icon: 'edit',
-                label: 'Edit',
-                action: () => console.log('Edit clicked!')
+                label: 'Menu item 1',
+                action: () => {
+                    console.log('Menu item 1 clicked');
+                }
             },
             {
-                icon: 'trash',
-                label: 'Delete',
-                action: () => console.log('Delete clicked!')
+                label: 'Menu item 2',
+                action: () => {
+                    console.log('Menu item 2 clicked');
+                }
             },
             {
-                icon: 'print',
-                label: 'Print',
-                action: () => console.log('Print clicked!')
+                label: 'Menu item 3',
+                action: () => {
+                    console.log('Menu item 3 clicked');
+                }
             }
         ]
     }

@@ -16,30 +16,27 @@ import { MatExpansionModule } from '@angular/material/expansion';
                 *ngFor="let item of accordionContent"
                 [expanded]="defaultExpanded"
                 class="ds-accordion"
+                [class.--standalone]="isStandalone"
             >
                 <mat-expansion-panel-header class="ds-accordion__title">
-                    <div class="ds-accordion__title-wrapper">
-                        <span
-                            *ngIf="item.icon"
-                            class="ds-icon--{{ item.icon }}"
-                        ></span>
-                        {{ item.title }}
-                    </div>
+                    {{ item.title }}
                 </mat-expansion-panel-header>
-                <div class="ds-accordion__content">
-                    {{ item.content }}
-                </div>
+
+                <div
+                    class="ds-accordion__content"
+                    [innerHTML]="item.content"
+                ></div>
             </mat-expansion-panel>
         </mat-accordion>
     `
 })
 export class QDSAccordionComponent {
-    @Input() customClasses: string = '';
-    @Input() openSingleItem: boolean = false;
-    @Input() defaultExpanded: boolean = false;
     @Input() accordionContent: {
         title: string;
         content: string;
-        icon: string;
     }[] = [];
+    @Input() customClasses: string = '';
+    @Input() defaultExpanded: boolean = false;
+    @Input() isStandalone: boolean = false;
+    @Input() openSingleItem: boolean = false;
 }
