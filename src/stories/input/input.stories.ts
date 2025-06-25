@@ -99,19 +99,6 @@ const meta: Meta<QDSInputComponent> = {
                 }
             }
         },
-        isLoading: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
         isRequired: {
             control: {
                 type: 'boolean'
@@ -212,14 +199,6 @@ export const TextInputWithHintText = {
         ...BasicTextInput.args,
         hintMessage: 'Hint message goes here.',
         inputId: 'input-8'
-    }
-};
-
-export const TextInputWithLoader = {
-    args: {
-        ...BasicTextInput.args,
-        inputId: 'input-9',
-        isLoading: true
     }
 };
 

@@ -10,7 +10,7 @@ import {
     selector: 'qds-tabs',
     template: `
         <div class="ds-tab-wrapper">
-            <div class="ds-tab-set">
+            <div class="ds-tab-set" [class.--centered]="isCentered">
                 <button
                     *ngFor="let tab of tabs; let i = index"
                     class="ds-tab"
@@ -42,6 +42,7 @@ import {
 })
 export class QDSTabsComponent implements AfterViewInit {
     @Input() contentClasses: string = '';
+    @Input() isCentered: boolean = false;
     @Input() tabs: Array<{
         content?: string;
         isDisabled?: boolean;
@@ -62,7 +63,10 @@ export class QDSTabsComponent implements AfterViewInit {
         });
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

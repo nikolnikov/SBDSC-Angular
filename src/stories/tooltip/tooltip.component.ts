@@ -15,19 +15,24 @@ import { MatTooltip } from '@angular/material/tooltip';
             #tooltip="matTooltip"
             matTooltip="{{ message }}"
             [matTooltipPosition]="position"
+            [matTooltipClass]="isWhite ? '--white' : ''"
         >
             <ng-content #trigger></ng-content>
         </span>
     `
 })
 export class QDSTooltipComponent implements AfterViewInit {
+    @Input() isWhite: boolean = false;
     @Input() message: string = '';
     @Input() position: 'above' | 'below' | 'left' | 'right' = 'above';
 
     @ViewChild('tooltip', { static: true }) tooltip!: MatTooltip;
     @ViewChild('trigger', { static: true }) trigger!: ElementRef;
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

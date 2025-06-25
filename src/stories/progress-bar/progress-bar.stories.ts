@@ -15,7 +15,7 @@ const meta: Meta<QDSProgressBarComponent> = {
     },
     tags: ['autodocs', '!dev'],
     argTypes: {
-        fillPercentage: {
+        progressValue: {
             control: {
                 type: 'number'
             },
@@ -27,6 +27,19 @@ const meta: Meta<QDSProgressBarComponent> = {
                     summary: '50'
                 }
             }
+        },
+        showPercentage: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: 'true'
+                }
+            }
         }
     }
 };
@@ -35,6 +48,6 @@ export default meta;
 
 export const DefaultProgressBar = {
     args: {
-        fillPercentage: '50'
+        progressValue: '50'
     }
 };

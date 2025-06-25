@@ -58,3 +58,10 @@ export const BasicTabs = {
         ]
     }
 };
+
+export const CenteredTabs = {
+    args: {
+        ...BasicTabs.args,
+        isCentered: true
+    }
+};

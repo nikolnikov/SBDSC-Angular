@@ -108,7 +108,7 @@ export const ProgressStepperWithCancelledStep = {
             {
                 label: 'Label',
                 subLabel: 'Subcategory',
-                status: 'cancelled'
+                status: 'sent-back'
             },
             {
                 label: 'Label',
@@ -146,33 +146,6 @@ export const ProgressStepperWithErrorStep = {
                 label: 'Label',
                 subLabel: 'Subcategory',
                 status: ''
-            }
-        ]
-    }
-};
-
-export const ProgressStepperWithWarningStep = {
-    args: {
-        steps: [
-            {
-                label: 'Label',
-                subLabel: 'Subcategory',
-                status: 'completed'
-            },
-            {
-                label: 'Label',
-                subLabel: 'Subcategory',
-                status: 'completed'
-            },
-            {
-                label: 'Label',
-                subLabel: 'Subcategory',
-                status: 'completed'
-            },
-            {
-                label: 'Label',
-                subLabel: 'Subcategory',
-                status: 'warning'
             }
         ]
     }

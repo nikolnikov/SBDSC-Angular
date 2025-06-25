@@ -47,9 +47,6 @@ import {
                 class="ds-icon--{{ iconRight }} ds-input__icon --right"
                 matSuffix
             ></span>
-            <span *ngIf="isLoading && !iconRight" matSuffix>
-                <qds-loader [isSmall]="true" />
-            </span>
 
             <div *ngIf="hintMessage && !errorMessage" class="ds-input__hint">
                 {{ hintMessage }}
@@ -68,7 +65,6 @@ export class QDSInputComponent implements AfterViewInit {
     @Input() hintMessage: string = '';
     @Input() inputId: string = '';
     @Input() isDisabled: boolean = false;
-    @Input() isLoading: boolean = false;
     @Input() isRequired: boolean = false;
     @Input() label: string = '';
     @Input() iconLeft: string = '';
@@ -78,7 +74,10 @@ export class QDSInputComponent implements AfterViewInit {
     @Input() tooltip: string = '';
     @Input() type: string = 'text';
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

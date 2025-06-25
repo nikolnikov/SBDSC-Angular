@@ -1,3 +1,4 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -7,177 +8,157 @@ import {
     Renderer2,
     ViewChild
 } from '@angular/core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'qds-table',
     template: `
-        <table
-            mat-table
-            class="ds-table"
-            [class]="customClasses"
-            [class.--expandable]="isExpandable"
-            [class.--flat]="isFlat"
-            [class.--transparent]="isTransparent"
-            [class.--sortable]="isSortable"
-            [dataSource]="dataSource"
-            [multiTemplateDataRows]="isExpandable"
-            matSort
-            (matSortChange)="announceSortChange($event)"
-        >
-            <ng-container
-                *ngFor="let column of columns"
-                [matColumnDef]="column.slug"
-            >
-                <th
-                    class="ds-table__head-th"
-                    [class.--actions]="column.slug === 'actions'"
-                    [class.--no-sort]="!column.sortable"
-                    mat-header-cell
-                    *matHeaderCellDef
-                    mat-sort-header
-                >
-                    {{ column.label }}
-                </th>
-                <td
-                    class="ds-table__row-td"
-                    [class.--actions]="column.slug === 'actions'"
-                    mat-cell
-                    *matCellDef="let row"
+        <ng-container *ngIf="isData; else basicTable">
+            <div class="ds-data-table__container" [class]="customClasses">
+                <table
+                    class="ds-data-table"
+                    [class.--dark-header]="hasDarkHeader"
+                    mat-table
+                    [dataSource]="dataSource"
+                    matSort
+                    matSortActive="lastname"
+                    matSortDirection="desc"
+                    (matSortChange)="announceSortChange($event)"
                 >
                     <ng-container
-                        *ngIf="
-                            column.slug !== 'expandable';
-                            else expandableTemplate
-                        "
+                        *ngFor="let column of columns"
+                        [matColumnDef]="column.slug"
                     >
-                        <ng-container
-                            *ngIf="
-                                column.slug !== 'actions';
-                                else actionsTemplate
-                            "
+                        <th
+                            class="ds-table__head-th"
+                            [class.--no-sort]="!column.sortable"
+                            mat-header-cell
+                            *matHeaderCellDef
+                            mat-sort-header
+                            [ngStyle]="{
+                                width: column.width ? column.width : ''
+                            }"
+                        >
+                            {{ column.label }}
+                        </th>
+                        <td
+                            class="ds-table__row-td"
+                            [class.--actions]="column.slug === 'actions'"
+                            mat-cell
+                            *matCellDef="let row"
+                            [ngStyle]="{
+                                width: column.width ? column.width : ''
+                            }"
+                        >
+                            <span [innerHTML]="row[column.slug]?.value"></span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Header row -->
+                    <tr
+                        mat-header-row
+                        class="ds-table__head"
+                        *matHeaderRowDef="getColumnSlugs()"
+                    ></tr>
+
+                    <!-- Data rows -->
+                    <tr
+                        mat-row
+                        class="ds-table__row"
+                        *matRowDef="let row; columns: getColumnSlugs()"
+                    ></tr>
+                </table>
+            </div>
+        </ng-container>
+
+        <ng-template #basicTable>
+            <div class="ds-table">
+                <table
+                    class="ds-table__table"
+                    mat-table
+                    [dataSource]="dataSource"
+                >
+                    <ng-container
+                        *ngFor="let column of columns"
+                        [matColumnDef]="column.slug"
+                    >
+                        <th
+                            class="ds-table__table-th"
+                            mat-header-cell
+                            *matHeaderCellDef
+                            [ngStyle]="{
+                                width: column.width ? column.width : ''
+                            }"
                         >
                             <div
-                                *ngIf="
-                                    row[column.slug]?.truncate;
-                                    else noTruncate
-                                "
-                                class="ds-truncate"
-                            >
-                                <span
-                                    #textElement
-                                    [matTooltip]="
-                                        isTextOverflow(textElement)
-                                            ? row[column.slug]?.value
-                                            : ''
-                                    "
-                                    [matTooltipPosition]="'above'"
-                                >
-                                    <span
-                                        [innerHTML]="row[column.slug]?.value"
-                                    ></span>
-                                </span>
-                            </div>
-                            <ng-template #noTruncate>
-                                <span
-                                    [innerHTML]="row[column.slug]?.value"
-                                ></span>
-                            </ng-template>
-                        </ng-container>
-
-                        <ng-template #actionsTemplate>
-                            <qds-icon-button
-                                icon="legacy--overflow"
-                                [matMenuTriggerFor]="actionsMenu.menu"
-                            />
-
-                            <qds-contextual-menu
-                                [menuItems]="row[column.slug]"
-                                [menuRight]="true"
-                                #actionsMenu
-                            />
-                        </ng-template>
+                                class="ds-row --flex-wrap"
+                                [innerHTML]="column.label"
+                            ></div>
+                        </th>
+                        <td
+                            class="ds-table__table-td"
+                            mat-cell
+                            *matCellDef="let row"
+                            [ngStyle]="{
+                                width: column.width ? column.width : ''
+                            }"
+                        >
+                            <div
+                                class="ds-row --flex-wrap"
+                                [innerHTML]="row[column.slug]?.value"
+                            ></div>
+                        </td>
                     </ng-container>
-                    <ng-template #expandableTemplate>
-                        <qds-icon-button
-                            icon="expand"
-                            [customClasses]="getExpandableClasses(row)"
-                            (click)="toggleRowExpansion(row)"
-                        />
-                    </ng-template>
-                </td>
-            </ng-container>
 
-            <ng-container matColumnDef="expandedDetail">
-                <td
-                    mat-cell
-                    *matCellDef="let element"
-                    [attr.colspan]="getColumnSlugs().length"
-                >
-                    <div
-                        class="ds-table__expansion-panel"
-                        [class.--expanded]="element.isExpanded"
-                    >
-                        <div class="ds-table__expansion-content">
-                            <span
-                                [innerHTML]="element.expandedContent?.value"
-                            ></span>
-                        </div>
-                    </div>
-                </td>
-            </ng-container>
+                    <!-- Header row -->
+                    <tr
+                        mat-header-row
+                        class="ds-table__table-tr"
+                        *matHeaderRowDef="getColumnSlugs()"
+                    ></tr>
 
-            <!-- Header row -->
-            <tr
-                mat-header-row
-                class="ds-table__head"
-                *matHeaderRowDef="getColumnSlugs()"
-            ></tr>
-
-            <!-- Data rows -->
-            <tr
-                mat-row
-                class="ds-table__row"
-                *matRowDef="
-                    let row;
-                    columns: getColumnSlugs();
-                    when: isDefaultRow
-                "
-            ></tr>
-
-            <!-- Expanded row -->
-            <tr
-                mat-row
-                class="ds-table__row --expandable"
-                *matRowDef="
-                    let row;
-                    columns: ['expandedDetail'];
-                    when: isExpandableRow
-                "
-            ></tr>
-        </table>
+                    <!-- Data rows -->
+                    <tr
+                        mat-row
+                        class="ds-table__table-tr"
+                        *matRowDef="let row; columns: getColumnSlugs()"
+                    ></tr>
+                </table>
+            </div>
+        </ng-template>
     `
 })
 export class QDSTableComponent implements AfterViewInit {
     @Input() customClasses: string = '';
-    @Input() isExpandable: boolean = false;
-    @Input() isFlat: boolean = false;
-    @Input() isTransparent: boolean = false;
-    @Input() isSortable: boolean = false;
+    @Input() hasDarkHeader: boolean = false;
+    @Input() isData: boolean = false;
     @Input() columns: Array<{
         slug: string;
         label: string;
         sortable?: boolean;
+        width?: string;
     }> = [];
-    @Input() dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
-        []
-    );
+    @Input()
+    set dataSource(value: any[] | MatTableDataSource<any>) {
+        if (Array.isArray(value)) {
+            this._dataSource = new MatTableDataSource(value);
+        } else {
+            this._dataSource = value;
+        }
+    }
     @Input() defaultSortColumn: string = '';
     @Input() defaultSortDirection: 'asc' | 'desc' = 'asc';
 
     @ViewChild(MatSort) sort!: MatSort;
+
+    get dataSource(): MatTableDataSource<any> {
+        return this._dataSource;
+    }
+
+    private _dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(
+        []
+    );
 
     getColumnSlugs(): string[] {
         return this.columns?.map(c => c.slug) || [];
@@ -191,28 +172,6 @@ export class QDSTableComponent implements AfterViewInit {
         }
     }
 
-    isTextOverflow(element: HTMLSpanElement): boolean {
-        return element.scrollWidth > element.clientWidth;
-    }
-
-    toggleRowExpansion(row: any): void {
-        row.isExpanded = !row.isExpanded;
-
-        this.dataSource.data = [...this.dataSource.data];
-    }
-
-    isDefaultRow = (index: number, row: any): boolean => {
-        return true;
-    };
-
-    isExpandableRow = (index: number, row: any): boolean => {
-        return !!row.expandedContent?.value;
-    };
-
-    getExpandableClasses(row: any): string {
-        return row.isExpanded ? '--expanded' : '';
-    }
-
     constructor(
         private _liveAnnouncer: LiveAnnouncer,
         private cdr: ChangeDetectorRef,
@@ -221,7 +180,7 @@ export class QDSTableComponent implements AfterViewInit {
     ) {}
 
     ngAfterViewInit() {
-        if (this.isSortable && this.sort) {
+        if (this.sort) {
             this.dataSource.sort = this.sort;
 
             this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {

@@ -19,8 +19,7 @@ import {
                 class="ds-step"
                 [class.completed]="step.status === 'completed'"
                 [class.error]="step.status === 'error'"
-                [class.warning]="step.status === 'warning'"
-                [class.cancelled]="step.status === 'cancelled'"
+                [class.sent-back]="step.status === 'sent-back'"
                 [class.current]="step.status === 'current'"
                 tabindex="-1"
                 aria-label="step"
@@ -35,7 +34,11 @@ import {
                     <span class="--dash"></span>
                 </span>
 
-                <div *ngIf="!hideLabels" class="ds-step__label">
+                <label
+                    *ngIf="!hideLabels"
+                    class="ds-step__label ds-flex --column"
+                    [ngClass]="isVertical ? '--start-start' : '--center-center'"
+                >
                     <span [attr.aria-label]="step.label">
                         {{ step.label }}
                     </span>
@@ -47,7 +50,7 @@ import {
                     >
                         {{ step.subLabel }}
                     </div>
-                </div>
+                </label>
             </div>
         </div>
     `
@@ -57,13 +60,19 @@ export class QDSProgressStepperComponent implements AfterViewInit {
     @Input() hideLabels: boolean = false;
     @Input() hideNumbers: boolean = false;
     @Input() isVertical: boolean = false;
-    @Input() steps: {
-        label?: string;
-        subLabel?: string;
-        status?: string;
-    }[] = [];
+    @Input() steps: any[] = [];
+    @Input() status:
+        | 'current'
+        | 'completed'
+        | 'error'
+        | 'warning'
+        | 'cancelled'
+        | '' = '';
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

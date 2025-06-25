@@ -54,6 +54,17 @@ const meta: Meta<QDSTooltipComponent> = {
                     summary: 'above'
                 }
             }
+        },
+        isWhite: {
+            control: 'boolean',
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: 'false'
+                }
+            }
         }
     }
 };
@@ -64,5 +75,12 @@ export const BasicTooltip = {
     args: {
         message: 'Tooltip goes here',
         position: 'above'
+    }
+};
+
+export const WhiteTooltip = {
+    args: {
+        ...BasicTooltip.args,
+        isWhite: true
     }
 };

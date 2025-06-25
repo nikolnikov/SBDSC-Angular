@@ -37,7 +37,17 @@ export interface TopBarItem {
                     </a>
                 </ng-container>
 
-                <ng-content select="[topbar-content]"></ng-content>
+                <button
+                    class="ds-button --icon isInverse ds-topbar__account"
+                    *ngIf="showUserAccount"
+                >
+                    <span>LS</span>
+                    <span
+                        class="ds-icon--user-circle"
+                        aria-label="user-circle"
+                        role="img"
+                    ></span>
+                </button>
             </div>
         </div>
 
@@ -173,6 +183,7 @@ export class QDSHeaderComponent implements AfterViewInit {
     @Input() topBarData: TopBarItem[] = [];
     @Input() showButton: boolean = false;
     @Input() showSearch: boolean = false;
+    @Input() showUserAccount: boolean = false;
 
     mobileNavOpen: boolean = false;
 

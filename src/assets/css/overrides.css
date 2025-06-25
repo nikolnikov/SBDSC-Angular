@@ -178,6 +178,11 @@ h2.sbdocs-subtitle h4 {
     top: 67px !important;
 }
 
+qds-progress-bar {
+    margin: auto;
+    width: fit-content !important;
+}
+
 body.sb-show-main {
     background-color: #fafafa;
 }

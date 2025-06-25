@@ -10,23 +10,33 @@ import {
     selector: 'qds-progress-bar',
     template: `
         <div
-            class="ds-progressbar"
+            class="ds-progress-wrap"
             [class]="customClasses"
             role="progressbar"
             aria-label="Progress"
         >
-            <div
-                class="--fill"
-                [ngStyle]="{ width: fillPercentage + '%' }"
-            ></div>
+            <div class="ds-progress-bar --rounded">
+                <div
+                    class="--fill"
+                    [ngStyle]="{ width: progressValue + '%' }"
+                ></div>
+            </div>
+
+            <span class="percentage" *ngIf="showPercentage">
+                {{ progressValue }} %
+            </span>
         </div>
     `
 })
 export class QDSProgressBarComponent implements AfterViewInit {
     @Input() customClasses: string = '';
-    @Input() fillPercentage: string = '50';
+    @Input() progressValue: string = '50';
+    @Input() showPercentage: boolean = true;
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

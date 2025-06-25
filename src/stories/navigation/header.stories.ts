@@ -48,7 +48,9 @@ const meta: Meta<QDSHeaderComponent> = {
                 }
             }
         },
-        showButton: { table: { disable: true } }
+        showButton: { table: { disable: true } },
+        showSearch: { table: { disable: true } },
+        showUserAccount: { table: { disable: true } }
     }
 };
 
@@ -107,6 +109,23 @@ const headerNavData = [
     ]
 ];
 
+export const headerNavData2 = [
+    [
+        {
+            label: 'Menu Option 1',
+            route: '#'
+        },
+        {
+            label: 'Menu Option 2',
+            route: '#'
+        },
+        {
+            label: 'Menu Option 3',
+            route: '#'
+        }
+    ]
+];
+
 const topBarData = [
     {
         label: 'Topbar Link',
@@ -123,7 +142,36 @@ export const HeaderWithNavigationAndTopBar = {
         logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
         logoSize: 'sm',
         navData: headerNavData,
-        topBarData: topBarData
+        topBarData: topBarData,
+        showButton: true,
+        showUserAccount: true
+    },
+    parameters: {
+        docs: {
+            source: {
+                language: 'html',
+                type: 'code',
+                code: `
+<qds-header
+    [logo]="'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg'"
+    [logoSize]="'sm'"
+    [navData]="[[{label: 'Menu Option 1', route: '#'}, {label: 'Menu Option 2', route: '#'}, {label: 'Menu Option 3', route: '#'}], [{label: 'Shop', image: 'https://ds.cdn.questdiagnostics.com/assets/img/placeholder-img.png', subNav: [{label: 'Vitamins & Supplements', route: '#'}, {label: 'Personal Care', route: '#'}, {label: 'Beauty', route: '#'}, {label: 'Medicines', route: '#'}, {label: 'Health Devices', route: '#'}, {label: 'Fitness', route: '#'}, {label: 'Health Food & Drinks', route: '#'}]}]]"
+    [topBarData]="[{label: 'Topbar Link', route: '#'}, {label: 'Topbar Link', route: '#'}]"
+>
+    <ng-container topbar-content>
+        <button class="ds-button --icon isInverse ds-topbar__account">
+            <span>LS</span>
+            <qds-icon name="user-circle" />
+        </button>
+    </ng-container>
+
+    <ng-container header-content>
+        <qds-button label="Button" size="sm" />
+    </ng-container>
+</qds-header>
+                `.trim()
+            }
+        }
     }
 };
 
@@ -131,7 +179,7 @@ export const HeaderWithNavigation = {
     args: {
         logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
         logoSize: 'sm',
-        navData: headerNavData
+        navData: headerNavData2
     }
 };
 
@@ -140,6 +188,24 @@ export const HeaderWithSearch = {
         logo: 'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg',
         logoSize: 'sm',
         showSearch: true
+    },
+    parameters: {
+        docs: {
+            source: {
+                language: 'html',
+                type: 'code',
+                code: `
+<qds-header
+    [logo]="'https://ds.cdn.questdiagnostics.com/assets/img/quest-logo.svg'"
+    [logoSize]="'sm'"
+>
+    <ng-container header-content>
+        <qds-input iconLeft="search" placeholder="Search" />
+    </ng-container>
+</qds-header>
+                `.trim()
+            }
+        }
     }
 };
 
