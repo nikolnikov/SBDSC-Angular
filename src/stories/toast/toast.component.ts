@@ -24,17 +24,15 @@ import {
             </span>
 
             <span *ngIf="!hideDismiss" matSnackBarActions>
-                <a *ngIf="textLinkLabel" class="ds-link" (click)="onClose()">
-                    {{ textLinkLabel }}
-                </a>
-
-                <button
-                    class="ds-button --icon --md"
-                    *ngIf="!textLinkLabel"
-                    (click)="onClose()"
-                >
-                    <span class="ds-icon--close"></span>
-                </button>
+                @if (textLinkLabel) {
+                    <a class="ds-link" (click)="onClose()">
+                        {{ textLinkLabel }}
+                    </a>
+                } @else {
+                    <button class="ds-button --icon --md" (click)="onClose()">
+                        <span class="ds-icon--close"></span>
+                    </button>
+                }
             </span>
         </div>
     `
@@ -67,12 +65,26 @@ export class QDSToastComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        this.updateNoIconClass();
         this.updateOffset();
     }
 
     @HostListener('window:resize', ['$event'])
     onResize() {
         this.updateOffset();
+    }
+
+    private updateNoIconClass(): void {
+        const snackBarContainer = document.querySelector(
+            '.mat-mdc-snack-bar-container'
+        );
+        if (snackBarContainer) {
+            if (this.hideIcon) {
+                this.renderer.addClass(snackBarContainer, '--no-icon');
+            } else {
+                this.renderer.removeClass(snackBarContainer, '--no-icon');
+            }
+        }
     }
 
     private updateOffset(): void {
