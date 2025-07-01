@@ -5,7 +5,7 @@ import { QDSButtonComponent } from '../button/button.component';
 import { QDSInputComponent } from '../input/input.component';
 
 const meta: Meta<QDSHeaderComponent> = {
-    title: 'Components/Navigation/Header',
+    title: 'Components/Navigation/Page header',
     component: QDSHeaderComponent,
     decorators: [
         moduleMetadata({

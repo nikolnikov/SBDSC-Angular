@@ -2,7 +2,9 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
+    EventEmitter,
     Input,
+    Output,
     Renderer2
 } from '@angular/core';
 
@@ -10,40 +12,54 @@ import {
     selector: 'qds-tag',
     template: `
         <button
-            class="ds-tag"
-            [class]="customClasses"
-            [class.--secondary]="isSecondary"
-            [class.--disabled]="isDisabled"
+            [ngClass]="['ds-tag', customClasses]"
             [class.--selected]="isSelected"
-            (click)="onTagClick()"
+            [class.--disabled]="isDisabled"
             [attr.aria-label]="label"
+            [disabled]="isDisabled"
+            [attr.tabindex]="isDisabled ? -1 : 0"
+            (click)="handleClick($event)"
         >
             {{ label }}
-
-            <span *ngIf="showClose" class="ds-icon--close"></span>
+            <span
+                *ngIf="showClose"
+                class="ds-icon--close"
+                role="button"
+                aria-label="Dismiss"
+                (click)="handleHide($event)"
+            ></span>
         </button>
     `
 })
 export class QDSTagComponent implements AfterViewInit {
-    @Input() clickHandler: () => void = () => {};
     @Input() customClasses: string = '';
-    @Input() isDisabled: boolean = false;
-    @Input() isSecondary: boolean = false;
     @Input() label: string = '';
+    @Input() isDisabled: boolean = false;
     @Input() showClose: boolean = false;
+    @Input() isSelected: boolean = false;
 
-    isSelected: boolean = false;
+    @Output() clickHandler = new EventEmitter<MouseEvent>();
+    @Output() hideHandler = new EventEmitter<MouseEvent>();
 
-    onTagClick() {
-        if (this.isDisabled) {
-            return;
+    handleClick(event: MouseEvent): void {
+        if (!this.isDisabled) {
+            this.isSelected = !this.isSelected;
+            this.clickHandler.emit(event);
         }
-
-        this.isSelected = !this.isSelected;
-        this.clickHandler();
     }
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    handleHide(event: MouseEvent): void {
+        event.stopPropagation();
+        if (!this.isDisabled) {
+            this.isSelected = !this.isSelected;
+            this.hideHandler.emit(event);
+        }
+    }
+
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
         const attrs = this.el.nativeElement.getAttributeNames();

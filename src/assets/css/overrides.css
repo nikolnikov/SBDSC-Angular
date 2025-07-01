@@ -1,5 +1,5 @@
 body {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Figtree', sans-serif !important;
     font-size: 16px;
 }
 
@@ -18,14 +18,14 @@ h1.sbdocs-title,
 }
 
 .sbdocs.sb-unstyled {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Figtree', sans-serif !important;
     margin: 0 0 24px;
     overflow: visible !important;
     padding-top: 0;
 }
 
 .sb-story.sb-unstyled {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Figtree', sans-serif !important;
 }
 
 .docblock-source.sb-unstyled {
@@ -136,7 +136,7 @@ h2.sbdocs-subtitle {
 }
 
 h2.sbdocs-subtitle h4 {
-    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-family: 'Figtree', Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 500;
     margin: 0;
@@ -152,7 +152,7 @@ h2.sbdocs-subtitle h4 {
 
 .ds-list li {
     font:
-        15px 'Roboto',
+        15px 'Figtree',
         sans-serif;
     line-height: 150%;
     padding: 0;
@@ -245,4 +245,8 @@ body.sb-show-main.dark-theme {
 }
 #story--components-pagination--default-pagination--primary-inner {
     justify-content: flex-end !important;
+}
+
+.ds-button {
+    margin: auto;
 }

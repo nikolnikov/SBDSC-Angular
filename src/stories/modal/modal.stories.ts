@@ -7,7 +7,6 @@ import {
     MatDialogRef,
     MAT_DIALOG_DATA
 } from '@angular/material/dialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -27,6 +26,7 @@ class ModalTriggerComponent {
     @Input() hideX: boolean = false;
     @Input() secondaryButtonHandler: Function = () => {};
     @Input() secondaryButtonLabel: string = '';
+    @Input() showLegalText: boolean = false;
     @Input() title: string = '';
     @Input() type: '' | 'alert' | 'error' | 'informative' = '';
 
@@ -45,6 +45,7 @@ class ModalTriggerComponent {
                 ghostButtonLabel: this.ghostButtonLabel,
                 hideX: this.hideX,
                 buttonHandler: () => {},
+                showLegalText: this.showLegalText,
                 type: this.type
             }
         });
@@ -57,7 +58,7 @@ const meta: Meta<ModalTriggerComponent> = {
     decorators: [
         moduleMetadata({
             declarations: [ModalTriggerComponent, QDSModalComponent],
-            imports: [CommonModule, MatDialogModule, BrowserAnimationsModule]
+            imports: [CommonModule, MatDialogModule]
         })
     ],
     parameters: {
@@ -133,6 +134,19 @@ const meta: Meta<ModalTriggerComponent> = {
                 }
             }
         },
+        showLegalText: {
+            control: {
+                type: 'boolean'
+            },
+            table: {
+                type: {
+                    summary: 'boolean'
+                },
+                defaultValue: {
+                    summary: 'false'
+                }
+            }
+        },
         type: {
             control: 'radio',
             options: ['informative', 'alert', 'error'],
@@ -154,7 +168,8 @@ export const BasicModal: Story = {
     args: {
         title: 'Modal title',
         content: `<p>Nulla quam senectus id lorem vitae velit quisque varius augue turpis tincidunt sapien, consectetur faucibus ligula volutpat convallis sit et velit risus consectetur mattis vel quisque justo, mi blandit porttitor mauris faucibus diam dolor id nisi, magna sodales ornare mauris convallis dui pellentesque.</p>`,
-        buttonLabel: 'Button'
+        buttonLabel: 'Button',
+        secondaryButtonLabel: 'Button'
     },
     parameters: {
         docs: {

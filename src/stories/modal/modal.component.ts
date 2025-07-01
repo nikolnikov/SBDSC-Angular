@@ -23,6 +23,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
             <div
                 class="ds-modal__wrapper"
                 [class.--all-btns]="ghostButtonLabel"
+                [class.--legal-spacing]="showLegalText"
             >
                 <div class="ds-modal__header">
                     <h2 *ngIf="title">
@@ -74,6 +75,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
                     </button>
                 </div>
             </div>
+
+            <div class="ds-modal__legal-text" *ngIf="showLegalText">
+                All rights reserved. &copy; {{ currentYear }}
+            </div>
         </div>
     `
 })
@@ -86,6 +91,7 @@ export class QDSModalComponent implements AfterViewInit {
     @Input() hideX: boolean = false;
     @Input() secondaryButtonHandler: Function = () => {};
     @Input() secondaryButtonLabel: string = '';
+    @Input() showLegalText: boolean = false;
     @Input() title: string = '';
     @Input() type: 'alert' | 'error' | 'informative' = 'informative';
 
@@ -93,6 +99,8 @@ export class QDSModalComponent implements AfterViewInit {
     isContentScrollable = false;
 
     @HostListener('window:resize')
+    currentYear = new Date().getFullYear();
+
     onResize() {
         this.checkScrollability();
     }
@@ -143,6 +151,7 @@ export class QDSModalComponent implements AfterViewInit {
         this.ghostButtonLabel = data.ghostButtonLabel;
         this.ghostButtonHandler = data.ghostButtonHandler;
         this.hideX = data.hideX;
+        this.showLegalText = data.showLegalText;
         this.type = data.type;
     }
 }

@@ -15,6 +15,15 @@ const meta: Meta<QDSTagComponent> = {
     },
     tags: ['autodocs', '!dev'],
     argTypes: {
+        customClasses: { table: { disable: true } },
+        label: {
+            control: 'text',
+            table: {
+                type: {
+                    summary: 'string'
+                }
+            }
+        },
         isDisabled: {
             control: {
                 type: 'boolean'
@@ -22,32 +31,6 @@ const meta: Meta<QDSTagComponent> = {
             table: {
                 type: {
                     summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
-        isSecondary: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
-        label: {
-            control: {
-                type: 'text'
-            },
-            table: {
-                type: {
-                    summary: 'string'
                 }
             }
         },
@@ -58,9 +41,6 @@ const meta: Meta<QDSTagComponent> = {
             table: {
                 type: {
                     summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
                 }
             }
         }
@@ -69,22 +49,15 @@ const meta: Meta<QDSTagComponent> = {
 
 export default meta;
 
-export const PrimaryTag = {
+export const BasicTag = {
     args: {
         label: 'Label'
     }
 };
 
-export const DisabledPrimaryTag = {
+export const DisabledTag = {
     args: {
-        isDisabled: true,
-        label: 'Label'
-    }
-};
-
-export const SecondaryTag = {
-    args: {
-        isSecondary: true,
-        label: 'Label'
+        ...BasicTag.args,
+        isDisabled: true
     }
 };
