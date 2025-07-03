@@ -65,8 +65,9 @@ export const DATE_FORMATS = {
                     isDisabled
                 "
             >
-                <mat-label *ngIf="label" class="ds-input__label">
+                <mat-label *ngIf="label" class="ds-input__label --range">
                     <span>{{ label }}</span>
+                    <span *ngIf="labelEndDate">{{ labelEndDate }}</span>
                 </mat-label>
 
                 <mat-date-range-input
@@ -129,119 +130,67 @@ export const DATE_FORMATS = {
             </mat-form-field>
         </ng-container>
         <ng-template #singleDate>
-            <ng-container *ngIf="!isSimple; else simpleDate">
-                <mat-form-field
-                    class="ds-input ds-input-datepicker"
-                    [class]="customClasses"
-                    [class.--error]="
-                        (formControlId &&
-                            formControlId.invalid &&
-                            formControlId.touched) ||
-                        hasError
+            <mat-form-field
+                class="ds-input ds-input-datepicker"
+                [class]="customClasses"
+                [class.--error]="
+                    (formControlId &&
+                        formControlId.invalid &&
+                        formControlId.touched) ||
+                    hasError
+                "
+                [class.mat-form-field-disabled]="
+                    (formControlId && formControlId.disabled) ||
+                    (formControlEndId && formControlEndId.disabled) ||
+                    isDisabled
+                "
+                [class.--required]="isRequired"
+            >
+                <mat-label *ngIf="label" class="ds-input__label">
+                    <span>{{ label }}</span>
+                </mat-label>
+
+                <input
+                    matInput
+                    placeholder="{{ placeholder }}"
+                    value=""
+                    name="date"
+                    [formControl]="formControlId"
+                    [id]="inputId"
+                    [matDatepicker]="picker"
+                    [min]="minDate ? minDate : ''"
+                    [max]="maxDate ? maxDate : ''"
+                    (click)="picker.open()"
+                    dateInputMask
+                />
+
+                <mat-datepicker-toggle
+                    matSuffix
+                    class="ds-datepicker-toggle"
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+
+                <mat-datepicker
+                    [panelClass]="panelClasses"
+                    #picker
+                ></mat-datepicker>
+
+                <div *ngIf="hintMessage" class="ds-input__hint">
+                    {{ hintMessage }}
+                </div>
+
+                <div
+                    *ngIf="
+                        formControlId &&
+                        formControlId.invalid &&
+                        formControlId.touched &&
+                        errorMessage
                     "
-                    [class.mat-form-field-disabled]="
-                        (formControlId && formControlId.disabled) ||
-                        (formControlEndId && formControlEndId.disabled) ||
-                        isDisabled
-                    "
-                    [class.--required]="isRequired"
+                    class="ds-input__error"
                 >
-                    <mat-label *ngIf="label" class="ds-input__label">
-                        <span>{{ label }}</span>
-                    </mat-label>
-
-                    <input
-                        matInput
-                        placeholder="{{ placeholder }}"
-                        value=""
-                        name="date"
-                        [formControl]="formControlId"
-                        [id]="inputId"
-                        [matDatepicker]="picker"
-                        [min]="minDate ? minDate : ''"
-                        [max]="maxDate ? maxDate : ''"
-                        (click)="picker.open()"
-                        dateInputMask
-                    />
-
-                    <mat-datepicker-toggle
-                        *ngIf="!isSimple"
-                        matSuffix
-                        class="ds-datepicker-toggle"
-                        [for]="picker"
-                    ></mat-datepicker-toggle>
-
-                    <mat-datepicker
-                        [panelClass]="panelClasses"
-                        #picker
-                    ></mat-datepicker>
-
-                    <div *ngIf="hintMessage" class="ds-input__hint">
-                        {{ hintMessage }}
-                    </div>
-
-                    <div
-                        *ngIf="
-                            formControlId &&
-                            formControlId.invalid &&
-                            formControlId.touched &&
-                            errorMessage
-                        "
-                        class="ds-input__error"
-                    >
-                        {{ errorMessage }}
-                    </div>
-                </mat-form-field>
-            </ng-container>
-            <ng-template #simpleDate>
-                <mat-form-field
-                    class="ds-input"
-                    [class]="customClasses"
-                    [class.--error]="
-                        (formControlId &&
-                            formControlId.invalid &&
-                            formControlId.touched) ||
-                        hasError
-                    "
-                    [class.mat-form-field-disabled]="
-                        (formControlId && formControlId.disabled) ||
-                        (formControlEndId && formControlEndId.disabled) ||
-                        isDisabled
-                    "
-                    [class.--required]="isRequired"
-                >
-                    <mat-label *ngIf="label" class="ds-input__label">
-                        <span>{{ label }}</span>
-                    </mat-label>
-
-                    <input
-                        matInput
-                        placeholder="{{ placeholder }}"
-                        value=""
-                        [formControl]="formControlId"
-                        [id]="inputId"
-                        type="date"
-                        [min]="minDate ? minDate : ''"
-                        [max]="maxDate ? maxDate : ''"
-                    />
-
-                    <div *ngIf="hintMessage" class="ds-input__hint">
-                        {{ hintMessage }}
-                    </div>
-
-                    <div
-                        *ngIf="
-                            formControlId &&
-                            formControlId.invalid &&
-                            formControlId.touched &&
-                            errorMessage
-                        "
-                        class="ds-input__error"
-                    >
-                        {{ errorMessage }}
-                    </div>
-                </mat-form-field>
-            </ng-template>
+                    {{ errorMessage }}
+                </div>
+            </mat-form-field>
         </ng-template>
     `,
     providers: [
@@ -266,8 +215,8 @@ export class QDSDatepickerComponent implements AfterViewInit, OnInit {
     @Input() isDisabled: boolean = false;
     @Input() isRange: boolean = false;
     @Input() isRequired: boolean = false;
-    @Input() isSimple: boolean = false;
     @Input() label: string = '';
+    @Input() labelEndDate: string = '';
     @Input() maxDate: Date | null = null;
     @Input() minDate: Date | null = null;
     @Input() panelClasses: string = '';

@@ -112,19 +112,6 @@ const meta: Meta<QDSDatepickerComponent> = {
                 }
             }
         },
-        isSimple: {
-            control: {
-                type: 'boolean'
-            },
-            table: {
-                type: {
-                    summary: 'boolean'
-                },
-                defaultValue: {
-                    summary: 'false'
-                }
-            }
-        },
         placeholder: {
             control: {
                 type: 'text'
@@ -156,20 +143,10 @@ export const BasicDatepicker = {
     }
 };
 
-export const SimpleDatepicker = {
-    args: {
-        ...BasicDatepicker.args,
-        inputId: 'datepicker-2',
-        isSimple: true
-    },
-    argTypes: {
-        ...BasicDatepicker.argTypes
-    }
-};
-
 export const DateRangePicker = {
     args: {
-        label: 'Custom range',
+        label: 'Start date',
+        labelEndDate: 'End date',
         hintMessage: 'mm/dd/yyyy',
         inputId: 'datepicker-3',
         isRange: true,
