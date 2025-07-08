@@ -98,9 +98,11 @@ export const DATE_FORMATS = {
                     matSuffix
                     [for]="pickerRange"
                 ></mat-datepicker-toggle>
+
                 <mat-date-range-picker
                     [panelClass]="panelClasses"
                     #pickerRange
+                    xPosition="end"
                 ></mat-date-range-picker>
 
                 <div *ngIf="hintMessage" class="ds-input__hint">
@@ -173,6 +175,7 @@ export const DATE_FORMATS = {
                 <mat-datepicker
                     [panelClass]="panelClasses"
                     #picker
+                    xPosition="end"
                 ></mat-datepicker>
 
                 <div *ngIf="hintMessage" class="ds-input__hint">
