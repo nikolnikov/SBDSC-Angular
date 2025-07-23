@@ -18,8 +18,10 @@ import {
             role="status"
         >
             <span
-                *ngIf="status !== 'neutral'"
-                [ngClass]="'ds-icon--' + icons[status]"
+                [ngClass]="'ds-icon--' + icon"
+                *ngIf="icon"
+                [attr.aria-label]="icon"
+                role="img"
             ></span>
             {{ label }}
         </div>
@@ -27,6 +29,7 @@ import {
 })
 export class QDSBadgeComponent implements AfterViewInit {
     @Input() customClasses: string = '';
+    @Input() icon: string = '';
     @Input() label: string = '';
     @Input() secondary: boolean = false;
     @Input() status:
@@ -39,13 +42,6 @@ export class QDSBadgeComponent implements AfterViewInit {
     getStatus() {
         return `--${this.status}`;
     }
-
-    icons = {
-        success: 'check-circle',
-        informative: 'info',
-        warning: 'warning',
-        critical: 'warning-octagon'
-    };
 
     constructor(
         private el: ElementRef,

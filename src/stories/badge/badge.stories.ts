@@ -23,6 +23,14 @@ const meta: Meta<QDSBadgeComponent> = {
                 }
             }
         },
+        icon: {
+            control: 'text',
+            table: {
+                type: {
+                    summary: 'string'
+                }
+            }
+        },
         status: {
             control: 'select',
             options: [
