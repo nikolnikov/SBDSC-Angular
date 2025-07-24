@@ -246,6 +246,8 @@ body.sb-show-main.dark-theme {
 }
 
 #storybook-root {
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
 
